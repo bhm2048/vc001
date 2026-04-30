@@ -4,7 +4,8 @@ import json
 
 import pytest
 
-from main import fetch_and_save, list_quotes, save_quote
+from main import fetch_and_save
+from storage import list_quotes, save_quote
 
 
 # ---------------------------------------------------------------------------

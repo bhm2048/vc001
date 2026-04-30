@@ -1,43 +1,17 @@
+"""CLI 入口：抓取名言並儲存，或列出已儲存的名言。"""
+
 import argparse
-import json
-import os
-from datetime import datetime, timezone
 
 from fetcher import fetch_quote
-
-QUOTES_FILE = "quotes.json"
-
-
-def save_quote(content, author):
-    quotes = []
-    if os.path.exists(QUOTES_FILE):
-        with open(QUOTES_FILE, "r", encoding="utf-8") as f:
-            quotes = json.load(f)
-
-    quotes.append({
-        "content": content,
-        "author": author,
-        "fetched_at": datetime.now(timezone.utc).isoformat(),
-    })
-
-    with open(QUOTES_FILE, "w", encoding="utf-8") as f:
-        json.dump(quotes, f, ensure_ascii=False, indent=2)
+from storage import QUOTES_FILE, list_quotes, save_quote
 
 
-def list_quotes():
-    if not os.path.exists(QUOTES_FILE):
-        print("尚無已儲存的名言。")
-        return
-    with open(QUOTES_FILE, "r", encoding="utf-8") as f:
-        quotes = json.load(f)
-    if not quotes:
-        print("尚無已儲存的名言。")
-        return
-    for i, q in enumerate(quotes, 1):
-        print(f"{i}. \"{q['content']}\" — {q['author']}")
+def fetch_and_save(count: int) -> None:
+    """抓取指定數量的名言並逐一儲存。
 
-
-def fetch_and_save(count):
+    Args:
+        count: 要抓取的名言數量。
+    """
     for _ in range(count):
         content, author = fetch_quote()
         print(f'"{content}"')
@@ -46,7 +20,8 @@ def fetch_and_save(count):
         print(f"(已儲存至 {QUOTES_FILE})\n")
 
 
-def main():
+def main() -> None:
+    """解析命令列參數並執行對應動作。"""
     parser = argparse.ArgumentParser(description="抓取並儲存名言")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--count", type=int, default=1, metavar="N", help="抓取 N 則名言（預設為 1）")
