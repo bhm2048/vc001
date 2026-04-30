@@ -1,12 +1,9 @@
 venv/
 __pycache__/
-*.pyc
-.env
-*.log
-.DS_Store
-.vscode/
-.idea/
+.git/
+tests/
 quotes.json
 .coverage
-htmlcov/
 .pytest_cache/
+*.pyc
+*.pyo
