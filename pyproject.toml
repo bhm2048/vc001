@@ -8,8 +8,12 @@ version = "0.1.0"
 requires-python = ">=3.10"
 dependencies = ["requests>=2.33"]
 
+[project.optional-dependencies]
+api = ["fastapi>=0.110", "uvicorn[standard]>=0.29", "httpx>=0.27"]
+
 [project.scripts]
-quote-fetcher = "quote_fetcher.main:main"
+quote-fetcher     = "quote_fetcher.main:main"
+quote-fetcher-api = "quote_fetcher.api:run"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/quote_fetcher"]
