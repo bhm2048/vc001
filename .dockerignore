@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+.git/
+tests/
+quotes.json
+.coverage
+.pytest_cache/
+*.pyc
+*.pyo
