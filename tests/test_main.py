@@ -4,7 +4,8 @@ import json
 
 import pytest
 
-from main import fetch_and_save, list_quotes, save_quote
+from quote_fetcher.main import fetch_and_save
+from quote_fetcher.storage import list_quotes, save_quote
 
 
 # ---------------------------------------------------------------------------
@@ -102,7 +103,9 @@ def test_list_quotes_with_data(tmp_path, monkeypatch, capsys):
 def test_fetch_and_save_calls_count(tmp_path, monkeypatch, mocker):
     """fetch_and_save(n) 應呼叫 fetch_quote 恰好 n 次，並呼叫 save_quote n 次。"""
     monkeypatch.chdir(tmp_path)
-    mock_fetch = mocker.patch("main.fetch_quote", return_value=("Quote.", "Author"))
+    mock_fetch = mocker.patch(
+        "quote_fetcher.main.fetch_quote", return_value=("Quote.", "Author")
+    )
 
     fetch_and_save(3)
 
